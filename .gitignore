@@ -12,3 +12,5 @@ macos/Packages/TesterCore/.swiftpm/
 *private-key*.txt
 *.p12
 .env
+
+node_modules/

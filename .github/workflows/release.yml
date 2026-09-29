@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: macos-26
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+      - name: Check the tag is on main
+        run: git merge-base --is-ancestor "$GITHUB_SHA" origin/main || { echo "::error::$GITHUB_REF_NAME isn't on main"; exit 1; }
+      - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
+        with:
+          xcode-version: latest-stable
+      - run: brew install xcodegen
+      - name: Unit tests
+        working-directory: macos/Packages/TesterCore
+        run: swift test
+      - name: Build, sign and publish
+        working-directory: macos
+        env:
+          RELEASES_REPO: ${{ github.repository }}
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test -n "$SPARKLE_PRIVATE_KEY" || { echo "::error::The SPARKLE_PRIVATE_KEY secret is not set"; exit 1; }
+          scripts/release.sh "${GITHUB_REF_NAME#v}"
+      - if: failure()
+        run: tail -60 macos/build/release.log 2>/dev/null || true

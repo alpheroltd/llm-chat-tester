@@ -53,15 +53,13 @@ cd macos && xcodebuild test -project LLMChatTester.xcodeproj -scheme LLMChatTest
 
 ## Release a new version of the Mac app
 
-Only a Mac with the Sparkle signing key in its Keychain can release (the key is backed up in the team password manager).
+Releases are built and signed by GitHub Actions. In Claude Code, run **`/release`** on an up-to-date `main`: it drafts the `## <version>` section of `macos/CHANGELOG.md` from the changes since the last tag, and once you approve, commits it, pushes a `v<version>` tag and watches the build.
 
-1. Commit and push your changes.
-2. Add a `## <version>` section to `macos/CHANGELOG.md`, describing the changes for testers.
-3. Try it without publishing: `cd macos && DRY_RUN=1 RELEASES_REPO=alpheroltd/llm-chat-tester scripts/release.sh 0.2.1`
-4. Publish: `RELEASES_REPO=alpheroltd/llm-chat-tester scripts/release.sh 0.2.1`
-5. Commit the version bump it makes in `macos/project.yml`.
+By hand: add the CHANGELOG section, commit and push it, then `git tag -a v0.2.1 -m "LLM Chat Tester 0.2.1" && git push origin v0.2.1`.
 
-The script creates a GitHub Release with the app (`LLM-Chat-Tester.zip`) and the update feed (`appcast.xml`, listing every version) attached. Installed apps read the feed from `https://github.com/alpheroltd/llm-chat-tester/releases/latest/download/appcast.xml`, so they pick the update up within a day, or straight away via **Check for Updates…** No GitHub Pages needed. Never delete old releases: the feed links to their zips.
+The tag runs `.github/workflows/release.yml`, which signs the update with the `SPARKLE_PRIVATE_KEY` repository secret (backed up in 1Password) and runs `macos/scripts/release.sh`. The version comes from the tag and the build number from the published feed, so nothing in `project.yml` needs bumping. To try a build locally without publishing: `cd macos && SPARKLE_PRIVATE_KEY=… DRY_RUN=1 RELEASES_REPO=alpheroltd/llm-chat-tester scripts/release.sh 0.2.1`.
+
+The workflow creates a GitHub Release with the app (`LLM-Chat-Tester.zip`) and the update feed (`appcast.xml`, listing every version) attached. Installed apps read the feed from `https://github.com/alpheroltd/llm-chat-tester/releases/latest/download/appcast.xml`, so they pick the update up within a day, or straight away via **Check for Updates…** No GitHub Pages needed. Never delete old releases: the feed links to their zips.
 
 ---
 

@@ -46,7 +46,7 @@ echo "==> Packaging 0.1.1 and writing the appcast"
 ZIP="$WORK/feed/LLM-Chat-Tester-0.1.1.zip"
 ditto -c -k --sequesterRsrc --keepParent "$NEW_APP" "$ZIP"
 printf -- "- Update smoke test build.\n" > "$WORK/notes.md"
-python3 scripts/appcast.py "$WORK/feed/appcast.xml" 0.1.1 2 "http://localhost:$PORT/$(basename "$ZIP")" "$("$SPARKLE_BIN/sign_update" "$ZIP")" "$WORK/notes.md"
+python3 scripts/appcast.py "$WORK/feed/appcast.xml" 0.1.1 2 "http://localhost:$PORT/$(basename "$ZIP")" "$(sign_archive "$ZIP")" "$WORK/notes.md"
 
 echo "==> Serving the feed on http://localhost:$PORT"
 (cd "$WORK/feed" && exec python3 -m http.server "$PORT" --bind 127.0.0.1) > "$WORK/server.log" 2>&1 &
