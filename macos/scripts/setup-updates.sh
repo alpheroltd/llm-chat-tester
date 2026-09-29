@@ -13,12 +13,30 @@ source scripts/lib.sh
 
 ensure_sparkle_tools
 
-echo "==> Creating (or reusing) the Sparkle signing key in your login Keychain"
-"$SPARKLE_BIN/generate_keys" >/dev/null
-PUBLIC_KEY="$("$SPARKLE_BIN/generate_keys" -p)"
-[[ -n "$PUBLIC_KEY" ]] || { echo "Could not read the public key from generate_keys" >&2; exit 1; }
-sed -i '' -E "s#(SPARKLE_PUBLIC_KEY: ).*#\1\"$PUBLIC_KEY\"#" project.yml
-echo "    Public key: $PUBLIC_KEY (written to project.yml)"
+EXISTING_KEY="$(yml_value SPARKLE_PUBLIC_KEY)"
+KEYCHAIN_KEY="$("$SPARKLE_BIN/generate_keys" -p 2>/dev/null || true)"
+
+if [[ -n "$EXISTING_KEY" ]]; then
+  # The app already trusts a key. Never create a different one: installed apps would reject every future update.
+  if [[ "$KEYCHAIN_KEY" != "$EXISTING_KEY" ]]; then
+    cat >&2 <<MSG
+The app is signed for key $EXISTING_KEY, but this Mac's Keychain has ${KEYCHAIN_KEY:-no Sparkle key}.
+Import the backed-up private key first:
+  "$SPARKLE_BIN/generate_keys" -f <backup-file>
+Refusing to continue, so no new key is created by mistake.
+MSG
+    exit 1
+  fi
+  PUBLIC_KEY="$EXISTING_KEY"
+  echo "==> Using the existing signing key (found in this Mac's Keychain)"
+else
+  echo "==> Creating the Sparkle signing key in your login Keychain"
+  "$SPARKLE_BIN/generate_keys" >/dev/null
+  PUBLIC_KEY="$("$SPARKLE_BIN/generate_keys" -p)"
+  [[ -n "$PUBLIC_KEY" ]] || { echo "Could not read the public key from generate_keys" >&2; exit 1; }
+  sed -i '' -E "s#(SPARKLE_PUBLIC_KEY: ).*#\1\"$PUBLIC_KEY\"#" project.yml
+fi
+echo "    Public key: $PUBLIC_KEY"
 
 if [[ -n "${RELEASES_REPO:-}" ]]; then
   FEED_URL="$(feed_url)"

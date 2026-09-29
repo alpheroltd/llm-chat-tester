@@ -4,6 +4,7 @@ Each `## <version>` section becomes the release notes testers see in the update 
 
 ## 0.2.0
 
+- **Learn tab:** a course on testing LLM chatbots in 9 modules, with lessons, quizzes, a glossary and a test checklist. Each lesson's **Practice this** buttons open the matching mission, bot level or judge exercise. (Sample content: your team's material will replace it.)
 - **Test cases:** save single-message tests with checks (contains, doesn't contain, regex, min/max length), run the suite with the sidebar's model and settings, and set runs per case to spot **flaky** tests. Includes 5 example cases, some targeting the ShopBot practice bot.
 - **Save as test case** from any message you send in Chat.
 - **Import/Export** test suites as JSON, in the same format as the web version.

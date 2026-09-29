@@ -9,8 +9,8 @@ The app can download a model for you on first launch.
 
 ## 2. Install the app
 
-1. Download the latest `LLM-Chat-Tester-x.y.z.zip` from the **Releases** page:
-   `https://github.com/<RELEASES_REPO>/releases/latest`
+1. Download the app from **https://alpheroltd.github.io/llm-chat-tester/**
+   (or directly: https://github.com/alpheroltd/llm-chat-tester/releases/latest/download/LLM-Chat-Tester.zip)
 2. Double-click the zip and drag **LLM Chat Tester** into your **Applications** folder.
 3. Open it. macOS will say it *"can't be opened because Apple cannot check it for malicious software"*.
    That's expected: it's an internal tool and isn't registered with Apple.

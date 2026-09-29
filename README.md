@@ -1,6 +1,71 @@
 # LLM Chat Tester
 
-A local webapp for **learning how to test chatbots**, using an LLM running on your own machine through [Ollama](https://ollama.com). Nothing leaves your laptop.
+A training tool for **learning how to test chatbots**, using LLMs running on your own Mac through [Ollama](https://ollama.com).
+
+This repo contains two versions:
+
+- **`macos/`: the Mac app**, the one the QA team uses. Native SwiftUI, with automatic updates through Sparkle.
+- **The web app** (repo root: `server.js`, `public/`), the original prototype. Documented further down.
+
+## Install the Mac app (testers)
+
+Download it from **https://alpheroltd.github.io/llm-chat-tester/** and follow [`macos/INSTALL.md`](macos/INSTALL.md). No cloning or Xcode needed. Updates arrive automatically.
+
+## Develop the Mac app
+
+**One-time setup:** macOS 15+, Xcode (open it once, or run `xcodebuild -runFirstLaunch`), then:
+
+```sh
+brew install xcodegen                               # generates the Xcode project from macos/project.yml
+brew install ollama && brew services start ollama   # the local chatbot
+ollama pull llama3.2:3b
+```
+
+Optional: install [Claude Code](https://claude.com/claude-code) and run `claude` once to log in (used by the LLM judge).
+
+**Run:**
+
+```sh
+cd macos
+xcodegen generate                  # re-run after editing project.yml or adding/removing Swift files
+open LLMChatTester.xcodeproj       # then ⌘R
+```
+
+The `.xcodeproj` isn't committed; it's generated. No Apple Developer account is needed: builds are signed ad-hoc and updates are off in local builds.
+
+**Test:**
+
+```sh
+(cd macos/Packages/TesterCore && swift test)   # core logic and content checks, about 20s
+cd macos && xcodebuild test -project LLMChatTester.xcodeproj -scheme LLMChatTester -derivedDataPath build/DerivedData
+                                                # UI tests: about 8 minutes, and they take over the mouse, so don't use the Mac meanwhile
+```
+
+**Where things are:**
+
+| Path | What |
+|---|---|
+| `macos/App/` | SwiftUI app: views, view models, Sparkle updater |
+| `macos/Packages/TesterCore/` | All logic, no UI: Ollama client, Claude judge, target bots, test cases, reports, Learn course loader |
+| `macos/Packages/TesterCore/Sources/TesterCore/LearnContent/` | The Learn tab's lessons, quizzes and glossary (JSON + Markdown). See [`macos/CONTENT_GUIDE.md`](macos/CONTENT_GUIDE.md) |
+| `macos/UITests/` | XCUITest suites |
+| `macos/scripts/` | Release tooling |
+
+## Release a new version of the Mac app
+
+Only a Mac with the Sparkle signing key in its Keychain can release (the key is backed up in the team password manager).
+
+1. Commit and push your changes.
+2. Add a `## <version>` section to `macos/CHANGELOG.md`, describing the changes for testers.
+3. Try it without publishing: `cd macos && DRY_RUN=1 RELEASES_REPO=alpheroltd/llm-chat-tester scripts/release.sh 0.2.1`
+4. Publish: `RELEASES_REPO=alpheroltd/llm-chat-tester scripts/release.sh 0.2.1`
+5. Commit the version bump it makes in `macos/project.yml`.
+
+The script uploads the app to a GitHub Release and publishes the update feed and download page to the `gh-pages` branch (served by GitHub Pages). Installed apps pick the update up within a day, or straight away via **Check for Updates…**
+
+---
+
+# Web app (original prototype)
 
 ## One-time setup
 
@@ -13,7 +78,7 @@ ollama pull llama3.2:3b         # ~2GB; any other model works too
 ## Run
 
 ```sh
-npm start
+npm start      # Node.js 20+, no npm install needed
 ```
 
 Open http://localhost:3000. The app has three tabs: **Chat**, **Test cases** and **LLM-as-a-judge**.

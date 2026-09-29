@@ -10,7 +10,7 @@ settings:
     SWIFT_VERSION: "6.0"
     MARKETING_VERSION: "0.1.0"
     CURRENT_PROJECT_VERSION: "1"
-    SPARKLE_FEED_URL: ""
+    SPARKLE_FEED_URL: "https://alpheroltd.github.io/llm-chat-tester/appcast.xml"
     SPARKLE_PUBLIC_KEY: "CO4vweL2scRPJW8VVzcsMyhpfyKB12hI5T10Ex8KnkM="
 
 packages:
