@@ -19,3 +19,26 @@ feed_url() {
 }
 
 yml_value() { grep -E "^\s*$1:" project.yml | head -1 | sed -E 's/^[^:]+: *"?([^"]*)"?.*/\1/'; }
+
+# Prints sign_update's enclosure attributes. CI passes the key in SPARKLE_PRIVATE_KEY; otherwise it comes from the Keychain.
+sign_archive() {
+  if [[ -n "${SPARKLE_PRIVATE_KEY:-}" ]]; then
+    printf '%s' "$SPARKLE_PRIVATE_KEY" | "$SPARKLE_BIN/sign_update" --ed-key-file - "$1"
+  else
+    "$SPARKLE_BIN/sign_update" "$1"
+  fi
+}
+
+# Fails unless <signature> is valid for <file> under <public key>, i.e. installed apps will accept the update.
+check_signature() { # file signature public-key
+  swift - "$@" <<'SWIFT'
+import CryptoKit
+import Foundation
+let args = CommandLine.arguments
+guard let data = FileManager.default.contents(atPath: args[1]),
+      let signature = Data(base64Encoded: args[2]),
+      let publicKey = Data(base64Encoded: args[3]),
+      let key = try? Curve25519.Signing.PublicKey(rawRepresentation: publicKey),
+      key.isValidSignature(signature, for: data) else { exit(1) }
+SWIFT
+}

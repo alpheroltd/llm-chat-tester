@@ -11,7 +11,7 @@ settings:
     MARKETING_VERSION: "0.2.0"
     CURRENT_PROJECT_VERSION: "2"
     SPARKLE_FEED_URL: "https://github.com/alpheroltd/llm-chat-tester/releases/latest/download/appcast.xml"
-    SPARKLE_PUBLIC_KEY: "CO4vweL2scRPJW8VVzcsMyhpfyKB12hI5T10Ex8KnkM="
+    SPARKLE_PUBLIC_KEY: "wxw23NxFNN0daYPX8R7F9ddvZa0kDTGLOfHj0Ua+CRs="
 
 packages:
   Sparkle:
