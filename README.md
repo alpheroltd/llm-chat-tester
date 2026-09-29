@@ -9,7 +9,7 @@ This repo contains two versions:
 
 ## Install the Mac app (testers)
 
-Download it from **https://alpheroltd.github.io/llm-chat-tester/** and follow [`macos/INSTALL.md`](macos/INSTALL.md). No cloning or Xcode needed. Updates arrive automatically.
+Download **LLM-Chat-Tester.zip** from the [latest release](https://github.com/alpheroltd/llm-chat-tester/releases/latest) and follow [`macos/INSTALL.md`](macos/INSTALL.md). No cloning or Xcode needed. Updates arrive automatically.
 
 ## Develop the Mac app
 
@@ -61,7 +61,7 @@ Only a Mac with the Sparkle signing key in its Keychain can release (the key is 
 4. Publish: `RELEASES_REPO=alpheroltd/llm-chat-tester scripts/release.sh 0.2.1`
 5. Commit the version bump it makes in `macos/project.yml`.
 
-The script uploads the app to a GitHub Release and publishes the update feed and download page to the `gh-pages` branch (served by GitHub Pages). Installed apps pick the update up within a day, or straight away via **Check for Updates…**
+The script creates a GitHub Release with the app (`LLM-Chat-Tester.zip`) and the update feed (`appcast.xml`, listing every version) attached. Installed apps read the feed from `https://github.com/alpheroltd/llm-chat-tester/releases/latest/download/appcast.xml`, so they pick the update up within a day, or straight away via **Check for Updates…** No GitHub Pages needed. Never delete old releases: the feed links to their zips.
 
 ---
 

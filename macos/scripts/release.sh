@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
-# Builds, signs and publishes a release of the Mac app from this repo:
-#   - the app zip goes to a GitHub Release (tag v<version>) on the repo
-#   - the Sparkle update feed (appcast.xml) and a download page (index.html) go to the repo's gh-pages branch,
-#     served by GitHub Pages at https://<owner>.github.io/<repo>/
+# Builds, signs and publishes a release of the Mac app as a GitHub Release (tag v<version>) on this repo,
+# with two files attached:
+#   - LLM-Chat-Tester.zip  the app
+#   - appcast.xml          the Sparkle update feed, listing every version (installed apps read the newest copy via
+#                          https://github.com/<repo>/releases/latest/download/appcast.xml)
 #
 # Usage:
 #   RELEASES_REPO=alpheroltd/llm-chat-tester scripts/release.sh 0.2.1
 # Options:
-#   DRY_RUN=1        build, sign, zip and write the feed + page into dist/; publish nothing and leave project.yml untouched
+#   DRY_RUN=1        build, sign, zip and write the feed into dist/; publish nothing and leave project.yml untouched
 #   SIGN_IDENTITY=…  code-signing identity (default "-" = ad-hoc)
 #
 # Release notes come from the "## <version>" section of macos/CHANGELOG.md.
@@ -86,39 +87,30 @@ echo "    $ZIP ($(du -h "$ZIP" | cut -f1))"
 NOTES_MD="$OUT/notes.md"
 awk -v v="## $VERSION" '$0 == v {on=1; next} /^## / {on=0} on' CHANGELOG.md > "$NOTES_MD"
 
-# ---- Feed + download page: start from what's published on gh-pages ----
-PAGES="build/pages"
-rm -rf "$PAGES"
-REMOTE="git@github.com:$RELEASES_REPO.git"
-if git ls-remote --exit-code --heads "$REMOTE" gh-pages >/dev/null 2>&1; then
-  git clone --quiet --depth 1 --branch gh-pages "$REMOTE" "$PAGES"
+# ---- Feed: the previous release's appcast plus this version (older entries keep their own download URLs) ----
+APPCAST="$OUT/appcast.xml"
+if curl -fsSL "$(feed_url)" -o "$APPCAST" 2>/dev/null; then
+  echo "    continuing the published feed ($(grep -c '<item>' "$APPCAST") earlier release(s))"
 else
-  mkdir -p "$PAGES"
-  git -C "$PAGES" init --quiet -b gh-pages
-  git -C "$PAGES" remote add origin "$REMOTE"
+  rm -f "$APPCAST" # first release: start a new feed
 fi
 DOWNLOAD_URL="https://github.com/$RELEASES_REPO/releases/download/v$VERSION/LLM-Chat-Tester.zip"
-python3 scripts/appcast.py "$PAGES/appcast.xml" "$VERSION" "$BUILD_NUMBER" "$DOWNLOAD_URL" "$SIGNATURE_ATTRS" "$NOTES_MD"
-python3 scripts/download_page.py "$PAGES/appcast.xml" "$PAGES/index.html" "$RELEASES_REPO"
-touch "$PAGES/.nojekyll" # serve the files as-is
-cp "$PAGES/appcast.xml" "$PAGES/index.html" "$OUT/"
+python3 scripts/appcast.py "$APPCAST" "$VERSION" "$BUILD_NUMBER" "$DOWNLOAD_URL" "$SIGNATURE_ATTRS" "$NOTES_MD"
 
 if [[ "$DRY_RUN" == 1 ]]; then
-  echo "==> DRY RUN: nothing published. See $OUT/ (zip, appcast.xml, index.html). project.yml restored."
+  echo "==> DRY RUN: nothing published. See $OUT/ (LLM-Chat-Tester.zip, appcast.xml). project.yml restored."
   exit 0
 fi
 
 # ---- Publish ----
 echo "==> Creating GitHub release v$VERSION on $RELEASES_REPO"
-gh release create "v$VERSION" "$ZIP" --repo "$RELEASES_REPO" --target main \
+gh release create "v$VERSION" "$ZIP" "$APPCAST" --repo "$RELEASES_REPO" --target main --latest \
   --title "LLM Chat Tester $VERSION" --notes-file "$NOTES_MD"
-echo "==> Publishing the update feed and download page to gh-pages"
-git -C "$PAGES" add appcast.xml index.html .nojekyll
-git -C "$PAGES" commit --quiet -m "Release $VERSION"
-git -C "$PAGES" push --quiet origin gh-pages
-cat <<EOF
-==> Released $VERSION.
-    Download page: https://${RELEASES_REPO%%/*}.github.io/${RELEASES_REPO#*/}/
-    Direct link:   https://github.com/$RELEASES_REPO/releases/latest/download/LLM-Chat-Tester.zip
-    Now commit the version bump:  git add macos/project.yml && git commit -m "Release $VERSION" && git push
-EOF
+sleep 3
+if ! curl -fsSL "$(feed_url)" | grep -q "<sparkle:version>$BUILD_NUMBER</sparkle:version>"; then
+  echo "WARNING: $(feed_url) doesn't list build $BUILD_NUMBER yet. Check the release on GitHub." >&2
+fi
+echo "==> Released $VERSION."
+echo "    Release page (send this to testers): https://github.com/$RELEASES_REPO/releases/latest"
+echo "    Direct download:                     https://github.com/$RELEASES_REPO/releases/latest/download/LLM-Chat-Tester.zip"
+echo "    Now commit the version bump:         git add macos/project.yml && git commit -m \"Release $VERSION\" && git push"
