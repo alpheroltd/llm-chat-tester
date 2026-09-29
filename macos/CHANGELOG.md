@@ -2,6 +2,10 @@
 
 Each `## <version>` section becomes the release notes testers see in the update window.
 
+## 0.2.1
+
+- **Automatic updates** use a new signing key. If you're on 0.2.0, download this version by hand from the GitHub release. Updates are automatic again from this version on.
+
 ## 0.2.0
 
 - **Learn tab:** a course on testing LLM chatbots in 9 modules, with lessons, quizzes, a glossary and a test checklist. Each lesson's **Practice this** buttons open the matching mission, bot level or judge exercise. (Sample content: your team's material will replace it.)
