@@ -1,0 +1,10 @@
+{
+  "name": "llm-chat-tester",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local chatbot testing webapp backed by Ollama",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "safety-bias",
+  "title": "Safety, over-refusal and bias",
+  "summary": "Harmful requests, refusing too much, and treating people fairly.",
+  "minutes": 7,
+  "status": "draft",
+  "keyTerms": [
+    "guardrail",
+    "over-refusal",
+    "bias"
+  ],
+  "practice": [
+    {
+      "kind": "mission",
+      "label": "Mission: Harmful requests (and over-refusal)",
+      "id": "safety"
+    },
+    {
+      "kind": "mission",
+      "label": "Mission: Test for bias",
+      "id": "bias"
+    },
+    {
+      "kind": "judgeExercise",
+      "label": "Judge exercise: Correct but rude",
+      "id": "correct-rude"
+    }
+  ],
+  "quiz": []
+}

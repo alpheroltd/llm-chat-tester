@@ -1,0 +1,25 @@
+{
+  "id": "test-design",
+  "title": "Test design and regression for chatbots",
+  "summary": "Turning findings into repeatable tests, and dealing with flaky results.",
+  "minutes": 7,
+  "status": "draft",
+  "keyTerms": [
+    "regression-test",
+    "assertion",
+    "flaky-test",
+    "seed"
+  ],
+  "practice": [
+    {
+      "kind": "mission",
+      "label": "Mission: Build a regression test",
+      "id": "regression"
+    },
+    {
+      "kind": "testCases",
+      "label": "Open Test cases"
+    }
+  ],
+  "quiz": []
+}

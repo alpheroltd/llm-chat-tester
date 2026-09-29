@@ -1,0 +1,16 @@
+[
+  "Hallucination",
+  "Consistency",
+  "Reproducibility",
+  "Instruction following",
+  "Context memory",
+  "Bias & fairness",
+  "Safety",
+  "Persona & tone",
+  "Input handling",
+  "Prompt injection",
+  "Data leakage",
+  "Regression",
+  "Evaluation",
+  "Other"
+]

@@ -1,0 +1,34 @@
+{
+  "id": "llm-judge",
+  "title": "Automated evaluation with LLM-as-a-judge",
+  "summary": "Grading replies at scale with a rubric, and knowing when not to trust the judge.",
+  "minutes": 7,
+  "status": "draft",
+  "keyTerms": [
+    "llm-as-a-judge",
+    "rubric",
+    "non-determinism"
+  ],
+  "practice": [
+    {
+      "kind": "mission",
+      "label": "Mission: Grade with an LLM judge",
+      "id": "judge"
+    },
+    {
+      "kind": "judgeExercise",
+      "label": "Judge exercise: Wordy but empty",
+      "id": "wordy-empty"
+    },
+    {
+      "kind": "judgeExercise",
+      "label": "Judge exercise: A genuinely good reply",
+      "id": "good-answer"
+    },
+    {
+      "kind": "judge",
+      "label": "Open LLM-as-a-judge"
+    }
+  ],
+  "quiz": []
+}

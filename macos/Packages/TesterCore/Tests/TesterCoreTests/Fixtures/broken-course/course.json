@@ -1,0 +1,4 @@
+{ "title": "Broken", "modules": [
+  { "id": "m1", "title": "One", "summary": "s", "lessons": ["good", "bad", "missing"] },
+  { "id": "m1", "title": "Dup", "summary": "s", "lessons": ["good"] }
+] }

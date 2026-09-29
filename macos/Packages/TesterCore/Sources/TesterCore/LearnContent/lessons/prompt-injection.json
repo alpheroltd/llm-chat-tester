@@ -1,0 +1,42 @@
+{
+  "id": "prompt-injection",
+  "title": "Prompt injection and data leakage",
+  "summary": "Testing whether a bot keeps its rules and its secrets.",
+  "minutes": 8,
+  "status": "draft",
+  "keyTerms": [
+    "prompt-injection",
+    "jailbreak",
+    "data-leakage",
+    "guardrail",
+    "system-prompt"
+  ],
+  "practice": [
+    {
+      "kind": "mission",
+      "label": "Mission: Break the bot",
+      "id": "injection"
+    },
+    {
+      "kind": "bot",
+      "label": "Target bot: ShopBot level 1",
+      "id": "shopbot-1"
+    },
+    {
+      "kind": "bot",
+      "label": "Target bot: ShopBot level 3",
+      "id": "shopbot-3"
+    },
+    {
+      "kind": "bot",
+      "label": "Target bot: ShopBot level 5",
+      "id": "shopbot-5"
+    },
+    {
+      "kind": "judgeExercise",
+      "label": "Judge exercise: Reply tries to hack the judge",
+      "id": "injection"
+    }
+  ],
+  "quiz": []
+}

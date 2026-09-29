@@ -1,0 +1,24 @@
+{
+  "id": "testing-is-different",
+  "title": "What's different about testing chatbots",
+  "summary": "Why expected-result testing breaks down, and what testers check instead.",
+  "minutes": 6,
+  "status": "draft",
+  "keyTerms": [
+    "non-determinism",
+    "context-window",
+    "assertion"
+  ],
+  "practice": [
+    {
+      "kind": "mission",
+      "label": "Mission: Does it remember?",
+      "id": "memory"
+    },
+    {
+      "kind": "freeChat",
+      "label": "Free chat: explore on your own"
+    }
+  ],
+  "quiz": []
+}

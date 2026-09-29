@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Build output (macos/.gitignore covers the Xcode side too)
+macos/build/
+macos/dist/
+macos/LLMChatTester.xcodeproj/
+macos/Packages/TesterCore/.build/
+macos/Packages/TesterCore/.swiftpm/
+
+# Never commit signing keys or secrets
+*private-key*.txt
+*.p12
+.env

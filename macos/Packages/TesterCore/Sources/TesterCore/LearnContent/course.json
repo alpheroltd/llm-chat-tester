@@ -1,0 +1,14 @@
+{
+  "title": "Testing LLM chatbots",
+  "modules": [
+    { "id": "foundations", "title": "1. How LLM chatbots work", "summary": "The basics every tester needs before testing a chatbot.", "lessons": ["how-llms-work"] },
+    { "id": "different", "title": "2. What's different about testing them", "summary": "Why classic test techniques need adapting.", "lessons": ["testing-is-different"] },
+    { "id": "hallucination", "title": "3. Hallucination", "summary": "Made-up facts, sources and policies.", "lessons": ["hallucination"] },
+    { "id": "instructions", "title": "4. Instructions, persona and scope", "summary": "Does the bot follow its spec?", "lessons": ["instructions-persona"] },
+    { "id": "safety", "title": "5. Safety and bias", "summary": "Harmful requests, over-refusal and fairness.", "lessons": ["safety-bias"] },
+    { "id": "injection", "title": "6. Prompt injection and data leakage", "summary": "Testing whether the bot keeps its rules and secrets.", "lessons": ["prompt-injection"] },
+    { "id": "regression", "title": "7. Test design and regression", "summary": "Repeatable tests for unpredictable software.", "lessons": ["test-design"] },
+    { "id": "evaluation", "title": "8. LLM-as-a-judge", "summary": "Automated grading and its limits.", "lessons": ["llm-judge"] },
+    { "id": "reporting", "title": "9. Reporting AI bugs", "summary": "Reports developers can act on.", "lessons": ["reporting-bugs"] }
+  ]
+}

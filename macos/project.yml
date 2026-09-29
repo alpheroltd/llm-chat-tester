@@ -1,0 +1,89 @@
+name: LLMChatTester
+options:
+  bundleIdPrefix: com.alphero.qa
+  deploymentTarget:
+    macOS: "15.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SPARKLE_FEED_URL: ""
+    SPARKLE_PUBLIC_KEY: "CO4vweL2scRPJW8VVzcsMyhpfyKB12hI5T10Ex8KnkM="
+
+packages:
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: "2.6.0"
+  TesterCore:
+    path: Packages/TesterCore
+
+targets:
+  LLMChatTester:
+    type: application
+    platform: macOS
+    sources: [App]
+    dependencies:
+      - package: Sparkle
+      - package: TesterCore
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: LLM Chat Tester
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSApplicationCategoryType: public.app-category.developer-tools
+        LSMinimumSystemVersion: "15.0"
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        # Sparkle: values come from the SPARKLE_* build settings below (set by scripts/setup-updates.sh).
+        # The updater only starts when both are non-empty.
+        SUFeedURL: $(SPARKLE_FEED_URL)
+        SUPublicEDKey: $(SPARKLE_PUBLIC_KEY)
+        SUEnableAutomaticChecks: true
+    settings:
+      base:
+        PRODUCT_NAME: LLM Chat Tester
+        PRODUCT_BUNDLE_IDENTIFIER: com.alphero.qa.llmchattester
+        # No Apple Developer account: ad-hoc for now; the release script re-signs with the team's self-signed identity.
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGN_STYLE: Manual
+        # Hardened Runtime is off on purpose: its library validation only lets the app load frameworks signed
+        # by the same Apple team, and ad-hoc/self-signed builds have no team, so Release builds crash loading
+        # Sparkle. It's only required for notarization. Turn it back on with a Developer ID certificate.
+        ENABLE_HARDENED_RUNTIME: NO
+        # No App Sandbox: it would block running the tester's `claude` CLI, and Sparkle doesn't need it outside the App Store.
+        ENABLE_APP_SANDBOX: NO
+        ENABLE_USER_SCRIPT_SANDBOXING: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        COMBINE_HIDPI_IMAGES: YES
+
+  LLMChatTesterUITests:
+    type: bundle.ui-testing
+    platform: macOS
+    sources: [UITests]
+    dependencies:
+      - target: LLMChatTester
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGN_STYLE: Manual
+        TEST_TARGET_NAME: LLMChatTester
+        PRODUCT_BUNDLE_IDENTIFIER: com.alphero.qa.llmchattester.uitests
+
+schemes:
+  LLMChatTester:
+    build:
+      targets:
+        LLMChatTester: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - LLMChatTesterUITests
+    archive:
+      config: Release

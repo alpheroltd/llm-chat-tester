@@ -1,0 +1,4 @@
+{ "id": "bad", "title": "Bad", "summary": "s", "minutes": 0, "status": "draft",
+  "keyTerms": ["unknown-term"],
+  "practice": [ { "kind": "mission", "id": "no-such-mission", "label": "M" }, { "kind": "bot", "id": "shopbot-9", "label": "B" } ],
+  "quiz": [ { "question": "Q", "options": ["A", "A"], "answer": 3, "explanation": "E" } ] }

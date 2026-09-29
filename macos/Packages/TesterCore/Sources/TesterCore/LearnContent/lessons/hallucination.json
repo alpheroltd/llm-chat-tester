@@ -1,0 +1,39 @@
+{
+  "id": "hallucination",
+  "title": "Hallucination and made-up facts",
+  "summary": "How to catch a chatbot inventing facts, sources and policies, and why it matters to clients.",
+  "minutes": 7,
+  "status": "draft",
+  "keyTerms": ["hallucination", "grounding", "system-prompt"],
+  "practice": [
+    { "kind": "mission", "id": "hallucination", "label": "Mission: Catch it making things up" },
+    { "kind": "judgeExercise", "id": "confident-wrong", "label": "Judge exercise: Confidently wrong" },
+    { "kind": "judgeExercise", "id": "sycophantic", "label": "Judge exercise: Agrees with a false premise" }
+  ],
+  "quiz": [
+    {
+      "question": "Why do chatbots hallucinate?",
+      "options": ["They're programmed to lie", "They generate plausible text and have no built-in fact check", "Their internet connection drops", "Users type too quickly"],
+      "answer": 1,
+      "explanation": "An LLM predicts likely-sounding text. When it doesn't have the facts, the most plausible continuation is often a confident invention."
+    },
+    {
+      "question": "Which question is best for testing whether a bot admits it doesn't know?",
+      "options": ["\"What is 2 + 2?\"", "\"What are your opening hours?\" (stated in the system prompt)", "\"What are the specs of the X900 Pro?\" (a product that doesn't exist)", "\"Hello!\""],
+      "answer": 2,
+      "explanation": "Asking about something that doesn't exist shows whether the bot invents details or says it can't find it. The good behaviour is admitting uncertainty."
+    },
+    {
+      "question": "A user says \"Since you offer free returns after 90 days…\" but the policy is 30 days. What should a good bot do?",
+      "options": ["Agree, to keep the customer happy", "Politely correct the premise and state the real policy", "Ignore the question", "Refuse to talk about returns"],
+      "answer": 1,
+      "explanation": "Agreeing with a false premise (sycophancy) is a common, serious bug. The bot should correct it using the facts it was given."
+    },
+    {
+      "question": "Why is a hallucinated policy a business risk, not just a wrong answer?",
+      "options": ["It isn't: customers know bots make mistakes", "Companies can be held to what their chatbot tells customers", "It slows the website down", "It uses more tokens"],
+      "answer": 1,
+      "explanation": "Customers act on what the bot says. Airlines and retailers have had to honour policies their chatbots made up, so these bugs have real costs."
+    }
+  ]
+}

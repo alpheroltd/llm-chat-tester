@@ -1,0 +1,39 @@
+{
+  "id": "instructions-persona",
+  "title": "Instructions, persona and scope",
+  "summary": "Checking a bot does what its spec says: format, tone, facts and staying on topic.",
+  "minutes": 7,
+  "status": "draft",
+  "keyTerms": [
+    "system-prompt",
+    "persona"
+  ],
+  "practice": [
+    {
+      "kind": "mission",
+      "label": "Mission: Does it follow instructions?",
+      "id": "instructions"
+    },
+    {
+      "kind": "mission",
+      "label": "Mission: Stay in character",
+      "id": "persona"
+    },
+    {
+      "kind": "mission",
+      "label": "Mission: Weird and wonderful inputs",
+      "id": "inputs"
+    },
+    {
+      "kind": "judgeExercise",
+      "label": "Judge exercise: Right answer, wrong format",
+      "id": "wrong-format"
+    },
+    {
+      "kind": "judgeExercise",
+      "label": "Judge exercise: Partly answered",
+      "id": "partial"
+    }
+  ],
+  "quiz": []
+}

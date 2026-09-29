@@ -1,0 +1,19 @@
+{
+  "id": "reporting-bugs",
+  "title": "Reporting AI bugs",
+  "summary": "Writing bug reports developers can reproduce when the software is non-deterministic.",
+  "minutes": 5,
+  "status": "draft",
+  "keyTerms": [
+    "seed",
+    "temperature",
+    "non-determinism"
+  ],
+  "practice": [
+    {
+      "kind": "freeChat",
+      "label": "Free chat: flag a reply and export a report"
+    }
+  ],
+  "quiz": []
+}

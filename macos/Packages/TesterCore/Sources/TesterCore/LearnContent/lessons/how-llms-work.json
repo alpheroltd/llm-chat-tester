@@ -1,0 +1,38 @@
+{
+  "id": "how-llms-work",
+  "title": "How LLM chatbots work",
+  "summary": "What happens between a question and a reply, and why the same question can get different answers.",
+  "minutes": 8,
+  "status": "draft",
+  "keyTerms": ["llm", "token", "system-prompt", "context-window", "temperature", "seed", "non-determinism"],
+  "practice": [
+    { "kind": "mission", "id": "consistency", "label": "Mission: Same question, different answers?" },
+    { "kind": "mission", "id": "reproducibility", "label": "Mission: Make a bug reproducible" }
+  ],
+  "quiz": [
+    {
+      "question": "At its core, what does an LLM do when it writes a reply?",
+      "options": ["Looks the answer up in a database", "Repeatedly predicts a likely next token", "Runs a web search and summarises the results", "Copies an answer from its training data"],
+      "answer": 1,
+      "explanation": "An LLM generates text one token at a time, each time predicting a likely continuation. It isn't looking anything up, which is why it can sound confident and still be wrong."
+    },
+    {
+      "question": "A client's bot answers the same question with different wording each time. What's the most likely reason?",
+      "options": ["The bot is broken", "The temperature is above 0, so its word choices vary", "The internet connection is unstable", "The context window is full"],
+      "answer": 1,
+      "explanation": "Above temperature 0 the model samples among likely tokens, so wording changes between runs. Different wording is normal; different facts or decisions is a bug."
+    },
+    {
+      "question": "You want a developer to see exactly the reply you saw. What should your bug report include?",
+      "options": ["Just the question you asked", "A screenshot of the reply", "The model, system prompt, full conversation, temperature and seed", "The time of day you tested"],
+      "answer": 2,
+      "explanation": "The reply depends on everything the model saw plus its settings. With temperature 0 and a fixed seed, the same inputs give the same reply on the same model."
+    },
+    {
+      "question": "Where do a client bot's rules (persona, scope, facts like opening hours) usually come from?",
+      "options": ["The system prompt", "The user's first message", "The model's training data only", "The website's HTML"],
+      "answer": 0,
+      "explanation": "Client bots are configured with a hidden system prompt. It's effectively the bot's spec, so it's where your test cases should come from."
+    }
+  ]
+}
