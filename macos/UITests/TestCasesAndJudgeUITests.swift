@@ -12,7 +12,7 @@ final class TestCasesAndJudgeUITests: XCTestCase {
                                 "-sessionsPath", NSTemporaryDirectory() + "uitest-sessions-\(UUID().uuidString)", "-mode", "Free chat",
                                 "-completedMissions", "()", "-beatenLevels", "()",
                                 "-testCasesPath", NSTemporaryDirectory() + "uitest-\(UUID().uuidString).json",
-                                "-runsPerCase", "1", "-judgeProvider", "claudeCode", "-judgeModel", "haiku"]
+                                "-runsPerCase", "1", "-judgeProvider", "claudeCode", "-judgeModel", "haiku", "-judgeExercises", "<7b7d>"]
         app.launch()
         XCTAssertTrue(app.buttons["send"].waitForExistence(timeout: 10))
     }

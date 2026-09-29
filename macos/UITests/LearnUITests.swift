@@ -47,7 +47,10 @@ final class LearnUITests: XCTestCase {
         XCTAssertFalse(app.popUpButtons["model-select"].isHittable, "the chat sidebar is collapsed while reading")
         XCTAssertTrue(app.staticTexts["What an LLM actually does"].exists, "## headings should render")
         XCTAssertTrue(any("learn-draft-banner").exists, "sample lessons are marked draft")
-        XCTAssertTrue(app.window.contains(any("learn-outline")), "outline must fit inside the window")
+        // Only horizontal clipping matters: a scrolling list's frame includes rows below the fold.
+        let window = app.window, outline = any("learn-outline").frame, body = any("learn-body").frame
+        XCTAssertTrue(outline.minX >= window.minX - 1 && body.maxX <= window.maxX + 1,
+                      "Learn layout is wider than the window: outline \(outline), body \(body), window \(window)")
         attachScreenshot("learn-lesson")
     }
 
@@ -117,8 +120,4 @@ final class LearnUITests: XCTestCase {
 
 private extension XCUIApplication {
     var window: CGRect { windows.firstMatch.frame }
-}
-
-private extension CGRect {
-    func contains(_ element: XCUIElement) -> Bool { contains(element.frame) }
 }
