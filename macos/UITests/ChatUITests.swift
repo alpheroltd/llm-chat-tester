@@ -1,6 +1,6 @@
 import XCTest
 
-/// Smoke tests against the real app and the local Ollama. Mirrors the web app's Playwright checks.
+/// Smoke tests against the real app and the local Ollama.
 final class ChatUITests: XCTestCase {
     private var app: XCUIApplication!
 

@@ -93,7 +93,7 @@ public struct ChatSession: Codable, Sendable, Equatable, Identifiable {
     public var flagCount: Int { messages.filter { $0.flag != nil }.count }
 }
 
-/// Builds the Markdown bug report from a chat. Ported from the web app's `buildReport` (public/js/flags.js).
+/// Builds the Markdown bug report from a chat.
 public enum ReportBuilder {
     private static func quote(_ text: String) -> String {
         (text.isEmpty ? "(empty)" : text).split(separator: "\n", omittingEmptySubsequences: false).map { "> \($0)" }.joined(separator: "\n")

@@ -34,6 +34,8 @@ The LLM-as-a-judge feature uses **your own** Claude plan through Claude Code:
 2. Open Terminal, run `claude`, and log in.
 3. In the app, open **Setup** (toolbar) → **Check again**. It should say "Claude Code … ready".
 
+The chatbots under test run on your Mac, but **the judge doesn't: the reply and rubric you judge are sent to Anthropic**, and each judgement uses a little of your Claude plan. Don't judge anything you couldn't paste into Claude yourself. The judge runs with no tools, so instructions hidden in a reply can't make it do anything.
+
 ## Updates
 
 The app checks for updates once a day, or use **LLM Chat Tester → Check for Updates…**

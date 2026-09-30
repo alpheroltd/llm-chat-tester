@@ -21,7 +21,7 @@ Stop and report at the first failed check. Don't work around it.
 
 1. Last release: `git describe --tags --abbrev=0 --match 'v*'`.
 2. If `git rev-list LAST..HEAD --count` is 0, stop: nothing to release.
-3. Read `git log --no-merges --format='%h %s%n%b' LAST..HEAD -- macos` and `git diff --stat LAST..HEAD -- macos`, and the diff itself wherever a commit message doesn't make the user-visible effect clear. Only `macos/` ships in the app; changes to the web version (`public/`, `server/`, `server.js`) don't belong in the notes.
+3. Read `git log --no-merges --format='%h %s%n%b' LAST..HEAD -- macos` and `git diff --stat LAST..HEAD -- macos`, and the diff itself wherever a commit message doesn't make the user-visible effect clear. Only `macos/` ships in the app; changes elsewhere don't belong in the notes.
 
 ## 3. Draft the version and notes
 

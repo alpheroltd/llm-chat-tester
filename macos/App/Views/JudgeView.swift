@@ -132,7 +132,7 @@ struct JudgeView: View {
     }
 }
 
-/// A rounded panel, like the web app's cards.
+/// A rounded panel.
 func card<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
     VStack(alignment: .leading, spacing: 8, content: content)
         .padding(14)

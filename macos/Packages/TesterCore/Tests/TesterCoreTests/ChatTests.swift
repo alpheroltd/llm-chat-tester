@@ -42,7 +42,7 @@ import Testing
         #expect(withSystem.count == 2)
     }
 
-    @Test func optionsSummaryMatchesWebApp() {
+    @Test func optionsSummaryFormat() {
         #expect(ChatOptions().summary == "temp 0.8 · seed random")
         #expect(ChatOptions(temperature: 0, seed: 42, maxTokens: 256).summary == "temp 0 · seed 42 · max 256 tokens")
     }
@@ -103,8 +103,9 @@ import Testing
         }
     }
 
-    @Test func claudeCLIVersionRuns() async throws {
-        guard let path = await ClaudeCLI.locate() else { return } // not installed on this machine: nothing to check
+    @Test(.enabled("needs Claude Code installed") { await ClaudeCLI.locate() != nil })
+    func claudeCLIVersionRuns() async throws {
+        let path = try #require(await ClaudeCLI.locate())
         let version = await ClaudeCLI.version(at: path)
         #expect(version?.contains("Claude Code") == true)
     }

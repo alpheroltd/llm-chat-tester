@@ -1,0 +1,69 @@
+{
+  "id" : "6F9C1D2E-3B4A-4C5D-8E7F-9A0B1C2D3E4F",
+  "messages" : [
+    {
+      "context" : {
+        "modeLabel" : "Mission: Stay in character",
+        "model" : "llama3.2:3b",
+        "options" : {
+          "maxTokens" : 256,
+          "seed" : 42,
+          "temperature" : 0
+        },
+        "systemPrompt" : "You are Kira, a pet-grooming assistant."
+      },
+      "failed" : false,
+      "id" : "11111111-1111-4111-8111-111111111111",
+      "role" : "user",
+      "text" : "Are you open on Sunday?"
+    },
+    {
+      "context" : {
+        "modeLabel" : "Mission: Stay in character",
+        "model" : "llama3.2:3b",
+        "options" : {
+          "maxTokens" : 256,
+          "seed" : 42,
+          "temperature" : 0
+        },
+        "systemPrompt" : "You are Kira, a pet-grooming assistant."
+      },
+      "failed" : false,
+      "flag" : {
+        "category" : "Hallucination",
+        "expected" : "Closed on Sundays.",
+        "note" : "Made up opening hours.",
+        "severity" : "High",
+        "verdict" : "fail"
+      },
+      "id" : "22222222-2222-4222-8222-222222222222",
+      "meta" : "llama3.2:3b · 41 tok\/s",
+      "role" : "assistant",
+      "text" : "Yes, we're open 7 days a week!"
+    },
+    {
+      "context" : {
+        "botId" : "shopbot-3",
+        "modeLabel" : "Target bot: ShopBot · Level 3",
+        "model" : "llama3.2:3b",
+        "options" : {
+          "temperature" : 0.8
+        },
+        "systemPrompt" : ""
+      },
+      "failed" : true,
+      "id" : "33333333-3333-4333-8333-333333333333",
+      "role" : "user",
+      "text" : "hello?"
+    },
+    {
+      "failed" : false,
+      "id" : "44444444-4444-4444-8444-444444444444",
+      "role" : "error",
+      "text" : "Ollama isn't reachable at http:\/\/localhost:11434. Is it running?"
+    }
+  ],
+  "modeLabel" : "Mission: Stay in character",
+  "started" : "2026-08-29T10:40:00Z",
+  "updated" : "2026-08-29T10:50:00Z"
+}

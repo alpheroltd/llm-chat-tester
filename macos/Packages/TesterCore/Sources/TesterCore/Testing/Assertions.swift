@@ -1,6 +1,6 @@
 import Foundation
 
-/// One check on a reply. The JSON shape matches the web app's `data/testcases.json`.
+/// One check on a reply.
 public struct Assertion: Codable, Sendable, Equatable, Hashable {
     public enum Kind: String, Codable, Sendable, CaseIterable, Identifiable {
         case contains

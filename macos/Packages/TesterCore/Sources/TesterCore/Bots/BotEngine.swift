@@ -1,7 +1,7 @@
 import Foundation
 
 /// A "break the bot" target: a fictional support bot guarding a secret, with increasing defences.
-/// Ported from the web app's `server/bots.js`. The prompts ship inside the app, so a determined tester
+/// The prompts ship inside the app, so a determined tester
 /// could dig them out; the secret is lightly obfuscated so it isn't a plain string in the binary.
 public struct Bot: Sendable, Identifiable, Equatable {
     public let id: String

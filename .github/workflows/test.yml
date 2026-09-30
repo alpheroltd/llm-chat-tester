@@ -1,0 +1,31 @@
+name: Test
+
+on:
+  pull_request:
+    paths:
+      - "macos/Packages/**"
+      - ".github/workflows/test.yml"
+  push:
+    branches: [main]
+    paths:
+      - "macos/Packages/**"
+      - ".github/workflows/test.yml"
+
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
+        with:
+          xcode-version: latest-stable
+      - name: Unit tests and content check
+        working-directory: macos/Packages/TesterCore
+        run: swift test

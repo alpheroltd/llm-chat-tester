@@ -9,7 +9,7 @@ struct CaseResultState: Equatable {
     var status: CaseStatus? { isRunning ? nil : CaseStatus(runs: runs) }
 }
 
-/// Saved test cases (a JSON file in Application Support, same format as the web app) and the suite runner.
+/// Saved test cases (a JSON file in Application Support) and the suite runner.
 @MainActor @Observable
 final class TestCasesViewModel {
     private(set) var cases: [TestCase] = []
@@ -25,6 +25,7 @@ final class TestCasesViewModel {
     }
 
     private let storeURL: URL
+    private var savingBlocked = false
     private var runTask: Task<Void, Never>?
 
     init() {
@@ -50,11 +51,19 @@ final class TestCasesViewModel {
             persist()
         } catch {
             cases = []
-            errorMessage = "Couldn't read saved test cases (\(storeURL.path)): \(error.localizedDescription)"
+            // Saving over an unreadable file would delete every case in it, so move it aside first.
+            let backup = storeURL.deletingPathExtension().appendingPathExtension("unreadable-\(Int(Date().timeIntervalSince1970)).json")
+            if (try? FileManager.default.moveItem(at: storeURL, to: backup)) != nil {
+                errorMessage = "Couldn't read your saved test cases, so they were moved to \(backup.path) and the list starts empty. (\(error.localizedDescription))"
+            } else {
+                savingBlocked = true
+                errorMessage = "Couldn't read saved test cases (\(storeURL.path)), so changes won't be saved until it's fixed: \(error.localizedDescription)"
+            }
         }
     }
 
     private func persist() {
+        guard !savingBlocked else { return }
         do {
             try FileManager.default.createDirectory(at: storeURL.deletingLastPathComponent(), withIntermediateDirectories: true)
             try TestCase.encodeSuite(cases).write(to: storeURL, options: .atomic)
