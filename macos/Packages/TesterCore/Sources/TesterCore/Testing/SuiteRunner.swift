@@ -30,6 +30,8 @@ public enum SuiteRunner {
         let started = ContinuousClock.now
         do {
             let reply = try await reply(for: testCase, model: model, options: options, client: client)
+            // A cancelled stream ends quietly rather than throwing, which would record a cut-off reply as a result.
+            try Task.checkCancellation()
             return CaseRun(reply: reply, assertions: testCase.assertions, seconds: (ContinuousClock.now - started).seconds)
         } catch is CancellationError {
             throw CancellationError()
