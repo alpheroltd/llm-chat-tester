@@ -1,0 +1,49 @@
+{
+  "$comment": "Written by the agent-setup skill. Every bundled hook reads this file; the hook scripts themselves need no editing.",
+
+  "commands": {
+    "build": "cd macos/Packages/TesterCore && swift build",
+    "test": "cd macos/Packages/TesterCore && swift test",
+    "generate": "cd macos && xcodegen generate"
+  },
+
+  "commitPolicy": "ask",
+  "protectedBranches": [],
+
+  "bannedCommands": [
+    {
+      "pattern": "\\b(cat|less|more|head|tail|bat|strings|xxd|base64|open)\\b[^|;&]*(private-key|\\.p12\\b)",
+      "reason": "That reads a signing key. The Sparkle private key lives in 1Password and the SPARKLE_PRIVATE_KEY repo secret. Ask me if you need it."
+    }
+  ],
+
+  "allowedDeletes": [
+    "build", "dist", ".build", ".swiftpm", "DerivedData", "__pycache__"
+  ],
+
+  "protectedPaths": [
+    "macos/build/**", "macos/dist/**",
+    "**/.build/**", "**/.swiftpm/**",
+    "macos/LLMChatTester.xcodeproj/**",
+    "**/Package.resolved",
+    "*private-key*", "*.p12", ".env", ".env.*"
+  ],
+
+  "fileChecks": [
+    {
+      "name": "json",
+      "paths": ["**/*.json"],
+      "command": "python3 -m json.tool {file} > /dev/null",
+      "timeout": 10
+    }
+  ],
+
+  "stopGate": {
+    "enabled": true,
+    "run": ["build"],
+    "watchPaths": ["macos/Packages/TesterCore/**"],
+    "timeout": 300
+  },
+
+  "sessionNote": ""
+}
