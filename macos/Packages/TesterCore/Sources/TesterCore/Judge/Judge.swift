@@ -116,7 +116,7 @@ public struct JudgeRequest: Sendable, Equatable {
     }
 }
 
-/// The judge's instructions and output format, shared by both providers. Ported from the web app's `server/judge.js`.
+/// The judge's instructions and output format, shared by both providers.
 public enum JudgePrompt {
     public static let system = """
     You are a strict, impartial QA grader evaluating a chatbot's reply for a software testing team.

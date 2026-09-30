@@ -18,7 +18,7 @@ public struct JudgeExercise: Codable, Sendable, Identifiable, Equatable {
     public let lesson: String
 }
 
-/// Learning content bundled with the app. It's exported from the web app's data files, so both stay in sync.
+/// Learning content bundled with the app.
 public enum Content {
     public static let rubricPresets: [RubricPreset] = load("rubric-presets")
     public static let judgeExercises: [JudgeExercise] = load("judge-exercises")

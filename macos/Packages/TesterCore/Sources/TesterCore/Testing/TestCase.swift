@@ -1,7 +1,6 @@
 import Foundation
 
-/// A single-message test with checks. The JSON shape matches the web app's `data/testcases.json`,
-/// so suites can be exported from one and imported into the other.
+/// A single-message test with checks. Suites are shared by exporting and importing this JSON.
 public struct TestCase: Codable, Sendable, Identifiable, Equatable, Hashable {
     public var id: String
     public var name: String

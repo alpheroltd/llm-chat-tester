@@ -11,7 +11,7 @@ let package = Package(
         .target(
             name: "TesterCore",
             resources: [
-                // Learning content exported from the web app (missions, rubric presets, judge exercises, seed test cases).
+                // Learning content (missions, rubric presets, judge exercises, seed test cases).
                 .process("Resources"),
                 // The Learn tab's course. Copied as a folder so lessons/, cheatsheets/ and images/ keep their structure.
                 .copy("LearnContent"),

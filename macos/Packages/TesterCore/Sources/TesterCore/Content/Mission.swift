@@ -1,6 +1,6 @@
 import Foundation
 
-/// A guided exercise teaching one category of chatbot bug. Exported from the web app's `public/data/missions.js`.
+/// A guided exercise teaching one category of chatbot bug.
 public struct Mission: Codable, Sendable, Identifiable, Equatable {
     public struct Setup: Codable, Sendable, Equatable {
         public struct Settings: Codable, Sendable, Equatable {

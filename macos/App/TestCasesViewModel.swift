@@ -9,7 +9,7 @@ struct CaseResultState: Equatable {
     var status: CaseStatus? { isRunning ? nil : CaseStatus(runs: runs) }
 }
 
-/// Saved test cases (a JSON file in Application Support, same format as the web app) and the suite runner.
+/// Saved test cases (a JSON file in Application Support) and the suite runner.
 @MainActor @Observable
 final class TestCasesViewModel {
     private(set) var cases: [TestCase] = []

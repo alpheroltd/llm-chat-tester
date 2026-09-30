@@ -42,7 +42,7 @@ import Testing
         #expect(withSystem.count == 2)
     }
 
-    @Test func optionsSummaryMatchesWebApp() {
+    @Test func optionsSummaryFormat() {
         #expect(ChatOptions().summary == "temp 0.8 · seed random")
         #expect(ChatOptions(temperature: 0, seed: 42, maxTokens: 256).summary == "temp 0 · seed 42 · max 256 tokens")
     }
