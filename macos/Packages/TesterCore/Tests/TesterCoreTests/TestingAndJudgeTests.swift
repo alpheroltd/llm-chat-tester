@@ -187,8 +187,8 @@ import Testing
         #expect(reply.leaked, "reply: \(reply.text)")
     }
 
-    @Test func claudeCodeJudgeGradesAWrongReplyAsFail() async throws {
-        guard await ClaudeCLI.locate() != nil else { return } // Claude Code not installed here
+    @Test(.enabled("needs Claude Code installed") { await ClaudeCLI.locate() != nil })
+    func claudeCodeJudgeGradesAWrongReplyAsFail() async throws {
         let verdict = try await ClaudeCodeJudge().judge(JudgeRequest(
             rubric: "Says the shop is closed on Sundays (open Mon-Sat).\nStays on the topic of pet grooming.",
             question: "Are you open on Sunday?",
