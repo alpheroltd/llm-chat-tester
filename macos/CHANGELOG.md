@@ -2,6 +2,11 @@
 
 Each `## <version>` section becomes the release notes testers see in the update window.
 
+## 0.2.2
+
+- **Test cases:** pressing Stop during a run no longer records the cut-off reply as a result.
+- **Test cases:** if your saved test cases can't be read, the file is moved aside and the error says where, instead of being replaced by an empty list the next time you save.
+
 ## 0.2.1
 
 - **Automatic updates** use a new signing key. If you're on 0.2.0, download this version by hand from the GitHub release. Updates are automatic again from this version on.
